@@ -1,0 +1,24 @@
+{
+  "name": "nodejs-mp-2020",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "task1": "nodemon --exec babel-node task1.js",
+    "task2": "nodemon --exec babel-node task2.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Serhii Khomych <sergei.x75v@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/node": "^7.7.0",
+    "@babel/preset-env": "^7.7.1",
+    "nodemon": "^1.19.4"
+  },
+  "dependencies": {
+    "csvtojson": "^2.0.10",
+    "through2": "^3.0.1"
+  }
+}
