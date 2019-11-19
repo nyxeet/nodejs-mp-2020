@@ -1,9 +1,9 @@
 ## Node JS Mentoring Program 2019/2020
-###Description
+### Description
 Cross-country global mentoring program which aims at improving corresponding skills related to Node.js ecosystem and connected environment, giving a strong base of skill set required to have for a production-ready engineer.
 
 
-###Agenda
+### Agenda
 1. Basics. Node.js fundamental theory
 2. In-memory CRUD REST service with validation
 3. PostgreSQL and layered architecture
