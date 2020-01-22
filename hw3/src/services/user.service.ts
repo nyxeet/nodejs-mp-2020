@@ -14,7 +14,7 @@ export default class UserService {
 
     static async getAllUsers(): Promise<UserInterface[]> {
         const users = await UserModel.findAll({raw: true});
-        if (users) throw new Error('Some problems with getting all users');
+        if (!users) throw new Error('Some problems with getting all users');
         return users;
     }
 

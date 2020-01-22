@@ -16,7 +16,6 @@ userRouter
     .get('/:id', async (req: Request, res: Response) => {
         const {id} = req.params;
         const user = await UserService.getUserById(parseInt(id, 10));
-        if (!user) res.status(404).send('No user found!');
         res.send(user);
     })
     .get('/', async (req: Request, res: Response) => {
