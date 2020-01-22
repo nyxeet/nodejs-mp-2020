@@ -3,17 +3,17 @@ import sequelize from '../db-access';
 
 const {Model} = sq;
 
-export class User extends Model {
+export default class UserModel extends Model {
 }
 
-User.init({
+UserModel.init({
     id: {
         type: sq.INTEGER,
         autoIncrement: true,
         primaryKey: true,
         allowNull: false
     },
-    name: {
+    login: {
         type: sq.STRING,
         allowNull: false,
         unique: true
@@ -21,6 +21,14 @@ User.init({
     password: {
         type: sq.STRING,
         allowNull: false
+    },
+    age: {
+        type: sq.INTEGER,
+        allowNull: false
+    },
+    isDeleted: {
+        type: sq.BOOLEAN,
+        defaultValue: false
     }
 }, {
     sequelize,

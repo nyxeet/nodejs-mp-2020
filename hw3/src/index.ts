@@ -1,19 +1,18 @@
 import * as  express from 'express';
-import { User as UserModel } from './models/user.model'
-import sequelize from './db-access';
-import * as dotenv from "dotenv";
 import * as bodyParser from 'body-parser';
-import router from "./routers";
+import sequelize from './db-access';
+import router from "./api/routes";
+import config from './config';
 
 const app = express();
-
-dotenv.config();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(router);
 
-sequelize.sync();
+sequelize.sync({
+    force: false
+}).then(() => console.log('Sequelize is synced!'));
 
-app.listen(process.env.PORT, () => console.log(`The app is running on ${process.env.PORT} port.`));
+app.listen(config.port, () => console.log(`The app is running on ${config.port} port.`));

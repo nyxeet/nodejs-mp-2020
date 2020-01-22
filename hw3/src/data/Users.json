@@ -1,9 +1,0 @@
-[
-  {
-    "id": "1",
-    "login": "login",
-    "password": "password",
-    "age": 20,
-    "isDeleted": false
-  }
-]

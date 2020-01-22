@@ -15,8 +15,3 @@ export const usersBodySchema = Joi.object({
         .required(),
     id: Joi.string()
 });
-
-
-export default {
-    usersBodySchema
-};
