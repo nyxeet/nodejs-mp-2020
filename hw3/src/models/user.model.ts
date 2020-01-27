@@ -10,8 +10,7 @@ UserModel.init({
     id: {
         type: sq.INTEGER,
         autoIncrement: true,
-        primaryKey: true,
-        allowNull: false
+        primaryKey: true
     },
     login: {
         type: sq.STRING,

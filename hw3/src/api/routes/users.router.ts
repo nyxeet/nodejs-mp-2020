@@ -23,12 +23,7 @@ userRouter
         res.send(users);
     })
     .post('/', validator.body(usersBodySchema), async (req: Request, res: Response) => {
-        const {login, password, age}: UserInterface = req.body;
-        const userDTO: UserInterface = {
-            login,
-            password,
-            age
-        };
+        const userDTO: UserInterface = req.body;
         const userRecord = await UserService.signup(userDTO);
         res.send(userRecord);
     })
