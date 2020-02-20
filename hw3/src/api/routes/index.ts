@@ -6,7 +6,7 @@ const router = Router();
 
 router
     .use('/users', userRouter)
-    .use('/group', groupRouter)
+    .use('/groups', groupRouter)
     .use('/', (req, res) => {
     res.send('Welcome to my app!')
 });

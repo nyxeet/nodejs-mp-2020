@@ -1,18 +1,27 @@
-import GroupModel from '../models/group.model';
-import { GroupInterface } from "../interfaces/Group.interface";
+import {GroupInterface} from "../interfaces/Group.interface";
+import models from '../models';
+
+const {GroupModel, UserModel} = models;
 
 export default class GroupService {
     static async getGroupById(id: number): Promise<GroupInterface> {
         const group = await GroupModel.findAll({
             raw: true,
-            where: { id }
+            where: {id}
         });
         if (!group) throw new Error('Can\'t find a group by Id');
         return group;
     }
 
     static async getAllGroups(): Promise<GroupInterface[]> {
-        const groups = await GroupModel.findAll({raw: true});
+        const groups = await GroupModel.findAll({
+            include: [
+                {
+                    model: UserModel,
+                    as: 'users'
+                }
+            ]
+        });
         if (!groups) throw new Error('Some problem with getting all groups');
         return groups;
     }

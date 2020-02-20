@@ -1,5 +1,5 @@
-import * as sq from 'sequelize';
-import config from './config';
+import * as sq from "sequelize";
+import config from '../config';
 
 const {Sequelize} = sq;
 
@@ -12,4 +12,9 @@ const sequelize = new Sequelize(config.pgDatabase, config.pgUser, config.pgPassw
     }
 });
 
-export default sequelize;
+const init = {
+    sequelize,
+    Sequelize: sq
+};
+
+export default init;

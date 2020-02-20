@@ -1,17 +1,18 @@
 import * as  express from 'express';
 import * as bodyParser from 'body-parser';
-import sequelize from './db-access';
+import models from './models';
 import router from "./api/routes";
 import config from './config';
-import * as postgresql from './scripts/postgresql';
+
+
 const app = express();
+const {sequelize} = models;
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(router);
-
-postgresql.createAndFillUsersTable();
 
 sequelize.sync({
     force: false

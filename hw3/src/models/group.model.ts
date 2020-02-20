@@ -1,25 +1,31 @@
-import * as sq from 'sequelize';
-import sequelize from '../db-access';
+import SequelizeInit from '../models/init';
 
-const {Model} = sq;
+const {sequelize, Sequelize} = SequelizeInit;
 
-export default class GroupModel extends Model {
+export default class GroupModel extends Sequelize.Model {
+    static associate(models) {
+        this.belongsToMany(models.UserModel, {
+            through: 'userGroup',
+            as: 'users',
+            foreignKey: 'groupId',
+            onDelete: 'cascade'
+        });
+    }
 }
 
 GroupModel.init({
     id: {
-        type: sq.INTEGER,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
     name: {
-        type: sq.STRING,
+        type: Sequelize.STRING,
         allowNull: false
     },
     permissions: {
-        type: sq.ARRAY(sq.STRING)
+        type: Sequelize.ARRAY(Sequelize.STRING)
     }
-
 }, {
     sequelize,
     modelName: 'group',

@@ -1,7 +1,6 @@
 import {Request, Response, Router} from 'express';
 import { createValidator } from 'express-joi-validation';
 import { groupBodySchema } from '../../validations/group.validation';
-import { GroupInterface } from '../../interfaces/Group.interface';
 import GroupService from "../../services/group.service";
 
 const groupRouter = Router();

@@ -1,32 +1,39 @@
-import * as sq from 'sequelize';
-import sequelize from '../db-access';
+import models from './init';
 
-const {Model} = sq;
+const {sequelize, Sequelize} = models;
 
-export default class UserModel extends Model {
+export default class UserModel extends Sequelize.Model {
+    static associate(models) {
+        this.belongsToMany(models.GroupModel, {
+            through: 'userGroup',
+            as: 'groups',
+            foreignKey: 'userId',
+            onDelete: 'cascade'
+        });
+    }
 }
 
 UserModel.init({
     id: {
-        type: sq.INTEGER,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
     login: {
-        type: sq.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
         unique: true
     },
     password: {
-        type: sq.STRING,
+        type: Sequelize.STRING,
         allowNull: false
     },
     age: {
-        type: sq.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false
     },
     isDeleted: {
-        type: sq.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         defaultValue: false
     }
 }, {
