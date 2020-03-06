@@ -1,3 +1,5 @@
+import * as jwt from 'jsonwebtoken';
+import * as argon2 from 'argon2';
 import UserModel from '../models/user.model';
 import {UserInterface} from "../interfaces/User.interface";
 import {getAutoSuggestedUsers as getAutoSuggestedUsersHelper} from "../helpers";
@@ -7,7 +9,7 @@ export default class UserService {
     static async getUserById(id: number): Promise<UserInterface> {
         const user = await UserModel.findAll({
             raw: true,
-            where: { id }
+            where: {id}
         });
         if (!user) throw new Error('Can\'t find user by Id');
         return user;
@@ -26,10 +28,26 @@ export default class UserService {
         return users;
     }
 
-    static async signup(user: UserInterface): Promise<UserInterface>{
+    static async signup(userDTO: UserInterface): Promise<UserInterface> {
+        const hashedPassword = await argon2.hash(userDTO.password);
+        const user = {
+            ...userDTO,
+            password: hashedPassword
+        };
         const userRecord = await UserModel.create(user);
         if (!userRecord) throw new Error('User can\'t be created');
         return userRecord;
+    }
+
+    static async login({login, password}: { login: string, password: string }) {
+        try {
+            const user = await UserModel.findOne({where: {login}});
+            const isPasswordCorrect = await argon2.verify(user?.password, password);
+            if (isPasswordCorrect) return jwt.sign({login, id: user.id}, process.env.SECRET_JWT, {expiresIn: '1h'});
+            throw new Error()
+        } catch (e) {
+            throw new Error(`User: ${login} is not found or password is wrong!`)
+        }
     }
 
     static async getAutoSuggestedUsers(loginSubstring: string, limit: number): Promise<UserInterface[]> {
