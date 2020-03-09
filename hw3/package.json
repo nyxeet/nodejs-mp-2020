@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "nodemon --exec ts-node src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Serhii Khomych <sergei.x75v@gmail.com>",
   "license": "ISC",
@@ -15,7 +15,9 @@
     "ts-node": "^8.5.2",
     "@typescript-eslint/eslint-plugin": "^2.8.0",
     "@typescript-eslint/parser": "^2.8.0",
-    "eslint": "^6.7.1"
+    "eslint": "^6.7.1",
+    "jest": "^25.1.0",
+    "supertest": "^4.0.2"
   },
   "dependencies": {
     "@hapi/joi": "^16.1.8",
@@ -36,5 +38,11 @@
     "pg": "^7.17.0",
     "sequelize": "^5.21.3",
     "typescript": "^3.7.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
 }

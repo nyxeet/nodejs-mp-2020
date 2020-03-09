@@ -1,35 +1,9 @@
-import * as  express from 'express';
-import * as bodyParser from 'body-parser';
-import * as cors from 'cors';
-import models from './models';
-import router from "./api/routes";
+import server from './server';
 import config from './config';
-import morganLogger from "./middlewares/morganLogger.middleware";
-import unhandledErrorsLogger from "./middlewares/unhandledErrorsLogger.middleware";
 
-const app = express();
-const {sequelize} = models;
 
-app.use(cors());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+server.listen(config.port, () => console.log(`The app is running on ${config.port} port.`));
 
-app.use(morganLogger);
-
-app.use(router);
-
-sequelize.sync({
-    force: false
-}).then(() => console.log('Sequelize is synced!'));
-
-app.listen(config.port, () => console.log(`The app is running on ${config.port} port.`));
-
-app.use(unhandledErrorsLogger);
-
-app.on('error', err => {
-    console.log('Error in ***app*** level');
-    console.log(err);
-});
 
 process.on('uncaughtException', err => {
     console.log('***uncaughtException***');
