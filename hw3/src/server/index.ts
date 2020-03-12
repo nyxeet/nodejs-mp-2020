@@ -3,8 +3,8 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import models from '../models';
 import router from "../api/routes";
-import morganLogger from "../middlewares/morganLogger.middleware";
-import unhandledErrorsLogger from "../middlewares/unhandledErrorsLogger.middleware";
+import morganLogger from "../loggers/morganLogger.middleware";
+import unhandledErrorsLogger from "../loggers/unhandledErrorsLogger.middleware";
 
 const app = express();
 const {sequelize} = models;

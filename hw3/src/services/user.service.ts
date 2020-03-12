@@ -7,6 +7,7 @@ import GroupModel from "../models/group.model";
 
 export default class UserService {
     static async getUserById(id: number): Promise<UserInterface> {
+        if (!id) throw new Error(`Id is ${id}`);
         const user = await UserModel.findAll({
             raw: true,
             where: {id}
@@ -28,7 +29,7 @@ export default class UserService {
         return users;
     }
 
-    static async signup(userDTO: UserInterface): Promise<UserInterface> {
+    static async signUp(userDTO: UserInterface): Promise<UserInterface> {
         const hashedPassword = await argon2.hash(userDTO.password);
         const user = {
             ...userDTO,
@@ -51,6 +52,7 @@ export default class UserService {
     }
 
     static async getAutoSuggestedUsers(loginSubstring: string, limit: number): Promise<UserInterface[]> {
+        if (!loginSubstring || !limit) throw new Error('Please, pass params to function');
         const users = await UserModel.findAll({raw: true});
         if (!users) throw new Error('Some problems with getting all users');
         return getAutoSuggestedUsersHelper(users, loginSubstring, limit)
