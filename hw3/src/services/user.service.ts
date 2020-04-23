@@ -1,6 +1,7 @@
 import UserModel from '../models/user.model';
 import {UserInterface} from "../interfaces/User.interface";
 import {getAutoSuggestedUsers as getAutoSuggestedUsersHelper} from "../helpers";
+import GroupModel from "../models/group.model";
 
 export default class UserService {
     static async getUserById(id: number): Promise<UserInterface> {
@@ -13,7 +14,14 @@ export default class UserService {
     }
 
     static async getAllUsers(): Promise<UserInterface[]> {
-        const users = await UserModel.findAll({raw: true});
+        const users = await UserModel.findAll({
+            include: [
+                {
+                    model: GroupModel,
+                    as: 'groups'
+                }
+            ]
+        });
         if (!users) throw new Error('Some problems with getting all users');
         return users;
     }

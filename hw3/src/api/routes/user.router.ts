@@ -1,7 +1,7 @@
 import {Request, Response, Router} from 'express';
 import { createValidator } from 'express-joi-validation';
 import UserService from '../../services/user.service';
-import {usersBodySchema} from "../../validations/users.validation";
+import {usersBodySchema} from "../../validations/user.validation";
 import {UserInterface} from "../../interfaces/User.interface";
 
 const userRouter = Router();
@@ -28,7 +28,7 @@ userRouter
         res.send(userRecord);
     })
     .put('/', validator.body(usersBodySchema), async (req: Request, res: Response) => {
-        const userDTO = req.body;
+        const userDTO: UserInterface = req.body;
         const result = await UserService.updateUser(userDTO);
         res.send(result);
     })
