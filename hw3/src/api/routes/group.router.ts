@@ -3,12 +3,15 @@ import { createValidator } from 'express-joi-validation';
 import { groupBodySchema } from '../../validations/group.validation';
 import GroupService from "../../services/group.service";
 import bunyanLoggers from "../../loggers/bunyan.logger";
+import middlewares from "../../middlewares/common.middleware";
 
 const groupRouter = Router();
 const validator = createValidator();
 
+const {checkAuth} = middlewares;
+
 groupRouter
-    .get('/:id', async (req: Request, res: Response) => {
+    .get('/:id', checkAuth, async (req: Request, res: Response) => {
         const {id} = req.params;
         try {
             const group = await GroupService.getGroupById(parseInt(id, 10));
@@ -19,7 +22,7 @@ groupRouter
             res.json({status: 400, message: e.message});
         }
     })
-    .get('/', async (req: Request, res: Response) => {
+    .get('/', checkAuth, async (req: Request, res: Response) => {
         try {
             const groups = await GroupService.getAllGroups();
             res.send(groups);
@@ -30,7 +33,7 @@ groupRouter
             res.json({status: 400, message: e.message});
         }
     })
-    .post('/', validator.body(groupBodySchema), async (req: Request, res: Response) => {
+    .post('/', checkAuth, validator.body(groupBodySchema), async (req: Request, res: Response) => {
         const groupDTO = req.body;
         try {
             const groupRecord = await GroupService.createGroup(groupDTO);
@@ -41,7 +44,7 @@ groupRouter
             res.json({status: 400, message: e.message});
         }
     })
-    .put('/', validator.body(groupBodySchema), async (req: Request, res: Response) => {
+    .put('/', checkAuth, validator.body(groupBodySchema), async (req: Request, res: Response) => {
         const groupDTO = req.body;
         try {
             const result = await GroupService.updateGroup(groupDTO);
@@ -52,7 +55,7 @@ groupRouter
             res.json({status: 400, message: e.message});
         }
     })
-    .delete('/id', async (req: Request, res: Response) => {
+    .delete('/id', checkAuth, async (req: Request, res: Response) => {
         const {id} = req.params;
         try {
             await GroupService.removeGroupById(parseInt(id, 10));
@@ -65,4 +68,3 @@ groupRouter
     });
 
 export default groupRouter;
-

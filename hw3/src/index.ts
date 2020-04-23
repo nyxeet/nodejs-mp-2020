@@ -1,5 +1,6 @@
 import * as  express from 'express';
 import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
 import models from './models';
 import router from "./api/routes";
 import config from './config';
@@ -9,6 +10,7 @@ import unhandledErrorsLogger from "./middlewares/unhandledErrorsLogger.middlewar
 const app = express();
 const {sequelize} = models;
 
+app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
